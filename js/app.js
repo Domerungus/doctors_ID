@@ -27,8 +27,14 @@ async function loadDoctors() {
 }
 
 // Search Logic
+const latvianMap = {
+  'ā':'a', 'č':'c', 'ē':'e', 'ģ':'g', 'ī':'i', 'ķ':'k', 'ļ':'l', 'ņ':'n', 'š':'s', 'ū':'u', 'ž':'z',
+  'Ā':'a', 'Č':'c', 'Ē':'e', 'Ģ':'g', 'Ī':'i', 'Ķ':'k', 'Ļ':'l', 'Ņ':'n', 'Š':'s', 'Ū':'u', 'Ž':'z'
+};
+
 function removeDiacritics(str) {
-  return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  let mapped = str.replace(/[āčēģīķļņšūžĀČĒĢĪĶĻŅŠŪŽ]/g, match => latvianMap[match]);
+  return mapped.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 }
 
 function filterDoctors(query) {

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'doctors-db-v2';
+const CACHE_NAME = 'doctors-db-v3';
 const urlsToCache = [
   '/',
   '/index.html',
