@@ -27,6 +27,10 @@ async function loadDoctors() {
 }
 
 // Search Logic
+function removeDiacritics(str) {
+  return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
+
 function filterDoctors(query) {
   if (!query) {
     resultsContainer.innerHTML = `
@@ -38,11 +42,11 @@ function filterDoctors(query) {
     return;
   }
   
-  query = query.toLowerCase().trim();
-  const tokens = query.split(/\s+/);
+  const normalizedQuery = removeDiacritics(query.toLowerCase().trim());
+  const tokens = normalizedQuery.split(/\s+/);
   
   const results = doctorsData.filter(doctor => {
-    const name = String(doctor.ARSTS).toLowerCase();
+    const name = removeDiacritics(String(doctor.ARSTS).toLowerCase());
     // The doctor name must match all search tokens
     return tokens.every(token => name.includes(token));
   });
